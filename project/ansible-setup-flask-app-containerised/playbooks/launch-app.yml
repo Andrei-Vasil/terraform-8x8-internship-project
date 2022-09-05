@@ -1,0 +1,24 @@
+- name: template compose file & launch
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: install python docker-compose module
+      pip:
+        name: docker-compose
+    - name: create project directory
+      become: true
+      file:
+        path: /home/ubuntu/flask_app
+        owner: ubuntu
+        group: ubuntu
+        state: directory
+    - name: copy compose file to host
+      become: true
+      copy:
+        src: ../docker-compose/docker-compose.yml
+        dest: /home/ubuntu/flask_app
+        owner: ubuntu
+        group: ubuntu
+    - name: start app via compose file
+      docker_compose:
+        project_src: /home/ubuntu/flask_app/

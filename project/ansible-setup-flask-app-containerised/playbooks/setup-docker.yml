@@ -1,0 +1,48 @@
+- name: docker setup
+  hosts: all
+  vars_files:
+    - "../vars/docker-setup-vars.yml"
+  gather_facts: false
+  become: true
+  tasks:
+    - name: apt update & install aptitude
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: yes
+    - name: apt update & install docker dependencies
+      apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: yes
+      with_items:
+        "{{ docker_required_packages }}"
+    - name: add docker gpg key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+    - name: apt update & install docker
+      apt: 
+        name: "{{ item }}"
+        state: latest
+        update_cache: yes
+      with_items:
+        "{{ docker_packges }}"
+    - name: apt update & install docker-compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/1.28.2/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: u+x,g+x,o+x
+    - name: Add adminstrator to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+    - name: start docker service
+      service:
+        name: docker
+        state: restarted

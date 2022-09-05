@@ -1,0 +1,5 @@
+services:
+  main:
+    image: 804064231264.dkr.ecr.us-east-1.amazonaws.com/hello-world-flask-app:latest
+    ports: 
+      - 8080:8080

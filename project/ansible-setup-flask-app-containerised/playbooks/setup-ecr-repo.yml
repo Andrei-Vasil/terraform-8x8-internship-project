@@ -1,0 +1,24 @@
+- name: log in using aws credentials and pull docker image
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: setup awscli
+      become: true
+      apt:
+        name: awscli
+    - name: install python docker module
+      pip:
+        name: docker
+    - name: get aws credentials
+      shell: 
+        cmd: aws ecr get-login-password --region us-east-1
+      register: ecr_credentials
+    - name: docker login to ecr
+      docker_login:
+        registry_url: 804064231264.dkr.ecr.us-east-1.amazonaws.com
+        username: AWS
+        password: "{{ ecr_credentials.stdout }}"
+    - name: pull docker image
+      docker_image:
+        name: 804064231264.dkr.ecr.us-east-1.amazonaws.com/hello-world-flask-app:latest
+        source: pull

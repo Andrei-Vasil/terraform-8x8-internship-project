@@ -1,3 +1,6 @@
+# Security keys
+**/*.pem
+
 # Local .terraform directories
 **/.terraform/*
 

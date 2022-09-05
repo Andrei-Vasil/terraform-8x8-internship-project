@@ -1,0 +1,3 @@
+- import_playbook: playbooks/setup-docker.yml
+- import_playbook: playbooks/setup-ecr-repo.yml
+- import_playbook: playbooks/launch-app.yml

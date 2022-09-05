@@ -27,3 +27,7 @@ variable "ssh_user" {
 variable "ansible_yml_path" {
   type = string
 }
+
+variable "instance_profile" {
+  type = string
+}

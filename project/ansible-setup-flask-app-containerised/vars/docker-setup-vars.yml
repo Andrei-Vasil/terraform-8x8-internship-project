@@ -1,0 +1,12 @@
+docker_required_packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg-agent
+  - software-properties-common
+  - python3-pip
+  - python3-setuptools
+docker_packges:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
