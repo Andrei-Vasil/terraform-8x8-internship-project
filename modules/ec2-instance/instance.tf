@@ -26,5 +26,6 @@ resource "aws_instance" "base_instance" {
 
   provisioner "local-exec" {
     # command = "ansible-playbook -i ${aws_instance.base_instance.public_ip}, --private-key ${var.private_key_path} ${var.ansible_yml_path}"  # TODO: ansible_main doesn't exist yet
+    command = "echo 'it s working!'"
   }
 }

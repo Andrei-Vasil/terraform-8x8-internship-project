@@ -10,12 +10,10 @@ variable "to_port" {
   type = number
 }
 
-variable "protocol" {
-  type = string
-}
+variable "protocol" {}
 
 variable "cidr_blocks" {
-  type    = list[string]
+  type    = list(string)
   default = ["0.0.0.0/0"]
 }
 
