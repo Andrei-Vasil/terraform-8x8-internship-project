@@ -9,15 +9,35 @@
     - name: install python docker module
       pip:
         name: docker
+    - name: w
+      shell:
+        cmd: whoami
+      register: var1
+    - name: d
+      debug:
+        msg: "{{ var1.stdout }}"
+    - name: w1
+      shell:
+        cmd: cat /etc/group | grep ubuntu
+      register: var1
+    - name: d2
+      debug:
+        msg: "{{ var1.stdout }}"
+    - name: pull nginx
+      shell:
+        cmd: docker pull nginx
     - name: get aws credentials
       shell: 
-        cmd: aws ecr get-login-password --region us-east-1
-      register: ecr_credentials
-    - name: docker login to ecr
-      docker_login:
-        registry_url: 804064231264.dkr.ecr.us-east-1.amazonaws.com
-        username: AWS
-        password: "{{ ecr_credentials.stdout }}"
+        cmd: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 804064231264.dkr.ecr.us-east-1.amazonaws.com
+    #   register: ecr_credentials
+    # - name: debug
+    #   debug:
+    #     msg: "parola man: {{ ecr_credentials.stdout }}"
+    # - name: docker login to ecr
+    #   docker_login:
+    #     registry_url: 804064231264.dkr.ecr.us-east-1.amazonaws.com
+    #     username: AWS
+    #     password: "{{ ecr_credentials.stdout }}"
     - name: pull docker image
       docker_image:
         name: 804064231264.dkr.ecr.us-east-1.amazonaws.com/hello-world-flask-app:latest

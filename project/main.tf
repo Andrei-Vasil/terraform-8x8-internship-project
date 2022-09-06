@@ -32,11 +32,11 @@ module "allow_internet_security_rule" {
 module "ecr_readonly_iam_role" {
   source = "../modules/iam-role"
 
-  name               = "ecr_readonly_iam_role"
+  name               = "ecr_readonly"
   iam_role_json_path = "${path.root}/iam_role_jsons/ecr_readonly.json"
 }
 
-### basic instane ###
+### image running docker compose ###
 module "ec2_flask_instance_1" {
   source = "../modules/ec2-instance"
 
@@ -44,11 +44,16 @@ module "ec2_flask_instance_1" {
   security_group_id = module.security_group.security_group_id
   key_name          = "ec2-key-1"
   private_key_path  = "${path.root}/.ec2-key-1.pem"
-  ansible_yml_path  = "${path.root}/ansible-setup-flask-app-containerised/playbook.yml"
+  ansible_path      = "${path.root}/ansible-setup-flask-app-containerised"
   instance_profile  = module.ecr_readonly_iam_role.instance_profile_name
+
+  depends_on = [
+    module.ecr_readonly_iam_role
+  ]
 }
 
-# ### image running docker compose ###
+
+# ### basic instance ###
 # module "ec2_flask_instance_2" {
 #   source = "../modules/ec2-instance"
 

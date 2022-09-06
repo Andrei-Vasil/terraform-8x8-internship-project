@@ -45,4 +45,4 @@
     - name: start docker service
       service:
         name: docker
-        state: restarted
+        state: started

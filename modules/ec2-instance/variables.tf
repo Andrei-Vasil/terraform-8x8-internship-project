@@ -24,7 +24,7 @@ variable "ssh_user" {
   default = "ubuntu"
 }
 
-variable "ansible_yml_path" {
+variable "ansible_path" {
   type = string
 }
 

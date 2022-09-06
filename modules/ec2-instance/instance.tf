@@ -21,11 +21,15 @@ resource "aws_instance" "base_instance" {
       type        = "ssh"
       user        = var.ssh_user
       private_key = file(var.private_key_path)
-      host        = aws_instance.base_instance.public_ip
+      host        = aws_instance.base_instance.public_dns
     }
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ${var.ssh_user}@${aws_instance.base_instance.public_ip}, --private-key ${var.private_key_path} ${var.ansible_yml_path}"
+    command = "echo 'ansible_docker_setup ansible_host=${aws_instance.base_instance.public_ip} ansible_user=${var.ssh_user} ansible_ssh_private_key_file=../${var.private_key_path}\n\n[all]\nansible_docker_setup' > ${var.ansible_path}/inventory.ini"
+  }
+
+  provisioner "local-exec" {
+    command = "cd ${var.ansible_path} && pwd && ansible-playbook -i inventory.ini playbook.yml"
   }
 }
