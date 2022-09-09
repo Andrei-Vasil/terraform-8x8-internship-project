@@ -7,7 +7,7 @@ variable "subnet_id" {
   default = "subnet-0a8132b5bdf3ead49"
 }
 
-variable "security_group_id" {
+variable "security_group_name" {
   type = string
 }
 

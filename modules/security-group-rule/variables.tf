@@ -10,7 +10,9 @@ variable "to_port" {
   type = number
 }
 
-variable "protocol" {}
+variable "protocol" {
+  type = string
+}
 
 variable "cidr_blocks" {
   type    = list(string)
