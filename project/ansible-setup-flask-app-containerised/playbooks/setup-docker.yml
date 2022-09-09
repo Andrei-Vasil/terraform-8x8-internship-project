@@ -3,13 +3,8 @@
   vars_files:
     - "../vars/docker-setup-vars.yml"
   gather_facts: false
-  become: true
+  become: yes
   tasks:
-    - name: apt update & install aptitude
-      apt:
-        name: aptitude
-        state: latest
-        update_cache: yes
     - name: apt update & install docker dependencies
       apt:
         name: "{{ item }}"
@@ -42,6 +37,9 @@
         name: ubuntu
         groups: docker
         append: yes
+    - name: reset ssh connection to allow user changes to affect ansible user 
+      meta: 
+        reset_connection
     - name: start docker service
       service:
         name: docker

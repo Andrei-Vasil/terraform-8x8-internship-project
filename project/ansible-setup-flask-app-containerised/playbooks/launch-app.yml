@@ -6,19 +6,21 @@
       pip:
         name: docker-compose
     - name: create project directory
-      become: true
+      become: yes
       file:
         path: /home/ubuntu/flask_app
         owner: ubuntu
         group: ubuntu
         state: directory
     - name: copy compose file to host
-      become: true
+      become: yes
       copy:
         src: ../docker-compose/docker-compose.yml
         dest: /home/ubuntu/flask_app
         owner: ubuntu
         group: ubuntu
     - name: start app via compose file
+      become: yes
+      become_user: ubuntu
       docker_compose:
         project_src: /home/ubuntu/flask_app/
