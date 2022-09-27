@@ -60,11 +60,11 @@ module "ecr_readonly_iam_role" {
 }
 
 ### image running docker compose ###
-module "ec2_flask_instance_1" {
+module "ec2_flask_instance" {
   source = "../modules/ec2-instance"
 
   name              = "module-test-1"
-  security_group_name = module.security_group.security_group_name
+  security_group_id = module.security_group.security_group_id
   key_name          = "ec2-key-1"
   private_key_path  = "${path.root}/.ec2-key-1.pem"
   ansible_path      = "${path.root}/ansible-setup-flask-app-containerised"
