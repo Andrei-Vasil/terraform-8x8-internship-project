@@ -66,7 +66,7 @@ module "ec2_flask_instance" {
   name              = "module-test-1"
   security_group_id = module.security_group.security_group_id
   key_name          = "ec2-key-1"
-  private_key_path  = "${path.root}/.ec2-key-1.pem"
+  private_key_path  = "${path.root}/.ec2-key.pem"
   ansible_path      = "${path.root}/ansible-setup-flask-app-containerised"
   instance_profile  = module.ecr_readonly_iam_role.instance_profile_name
 
