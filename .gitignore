@@ -1,3 +1,6 @@
+# ansible hosts
+**/inventory.ini
+
 # Security keys
 **/*.pem
 
