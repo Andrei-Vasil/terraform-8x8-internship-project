@@ -4,7 +4,7 @@ resource "aws_instance" "base_instance" {
   instance_type               = "t2.micro"
   subnet_id                   = var.subnet_id
   associate_public_ip_address = true
-  security_groups             = [var.security_group_name]
+  vpc_security_group_ids      = [var.security_group_id]
   iam_instance_profile        = var.instance_profile
   key_name                    = var.key_name
 
