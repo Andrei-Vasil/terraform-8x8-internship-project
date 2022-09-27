@@ -26,8 +26,8 @@ module "api_security_rule" {
   source = "../modules/security-group-rule"
 
   type              = "ingress"
-  from_port         = 8080
-  to_port           = 8080
+  from_port         = 80
+  to_port           = 80
   protocol          = "tcp"
   security_group_id = module.security_group.security_group_id
 
